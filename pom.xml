@@ -59,5 +59,36 @@
         </plugins>
     </build>
 
+	<plugin>
+    <groupId>org.codehaus.cargo</groupId>
+    <artifactId>cargo-maven2-plugin</artifactId>
+    <version>1.9.1</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>deploy</goal>
+            </goals>
+            <configuration>
+                <container>
+                    <containerId>tomcat9x</containerId>
+                    <type>remote</type>
+                    <url>http://13.201.134.42:8080/</url>
+                    <username>${env.TOMCAT_USERNAME}</username> <!-- Jenkins environment variable -->
+                    <password>${env.TOMCAT_PASSWORD}</password> <!-- Jenkins environment variable -->
+                </container>
+                <deployables>
+                    <deployable>
+                        <groupId>in.javahome</groupId>
+                        <artifactId>myweb</artifactId>
+                        <version>8.6.9</version>
+                        <type>war</type>
+                    </deployable>
+                </deployables>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+
 	
 </project>
