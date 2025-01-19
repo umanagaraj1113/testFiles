@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -27,20 +27,20 @@
     <distributionManagement>
         <snapshotRepository>
             <id>nexusRepo</id>
-            <url>http://34.208.218.12:8081/repository/sample-snapshots/</url>
+            <url>https://34.208.218.12:8081/repository/sample-snapshots/</url> <!-- HTTPS -->
         </snapshotRepository>
 
         <repository>
             <id>nexusRepo</id>
-            <url>http://44.202.251.20:8081/repository/flm-releases/</url>
+            <url>https://44.202.251.20:8081/repository/flm-releases/</url> <!-- HTTPS -->
         </repository>
     </distributionManagement>
 
     <pluginRepositories>
-        <pluginRepository>    
+        <pluginRepository>
             <id>maven-central</id>
             <name>Maven Central Repository</name>
-            <url>https://repo.maven.apache.org/maven2</url> <!-- HTTPS URL -->
+            <url>https://repo.maven.apache.org/maven2</url> <!-- HTTPS -->
         </pluginRepository>
     </pluginRepositories>
 
@@ -52,41 +52,9 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <failOnMissingWebXml>false</failOnMissingWebXml> <!-- Don't fail if web.xml is missing -->
                 </configuration>
-            </plugin>
-
-            <!-- Cargo Maven Plugin for deployment -->
-            <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven2-plugin</artifactId>
-                <version>1.9.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                        <configuration>
-                            <container>
-                                <containerId>tomcat9x</containerId>
-                                <type>remote</type>
-                                <url>http://13.201.134.42:8080/</url>
-                                <username>${env.TOMCAT_USERNAME}</username> <!-- Jenkins environment variable -->
-                                <password>${env.TOMCAT_PASSWORD}</password> <!-- Jenkins environment variable -->
-                            </container>
-                            <deployables>
-                                <deployable>
-                                    <groupId>in.javahome</groupId>
-                                    <artifactId>myweb</artifactId>
-                                    <version>8.6.9</version>
-                                    <type>war</type>
-                                </deployable>
-                            </deployables>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 </project>
-
